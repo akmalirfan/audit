@@ -75,6 +75,7 @@ export default (checklistItem) => {
     expect(
         checklistItem(stateBefore, action)
     ).toEqual(stateAfter);
+    
     console.log(
         '%cchecklistItem passed',
         'color: white; background-color: green;'

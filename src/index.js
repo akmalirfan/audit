@@ -1,76 +1,17 @@
 let React = require('react');
 let ReactDOM = require('react-dom');
 let Redux = require('redux');
-
-// Reducer
-const todo = (state = [], action) => {
-    switch (action.type) {
-        case 'MAKE_IT_PASS':
-            return state.map(section => {
-                if (section.section === action.section) {
-                    return {
-                        ...section,
-                        items: section.items.map(item => {
-                            if (item.id === action.id) {
-                                return {
-                                    ...item,
-                                    value: 'passed'
-                                };
-                            }
-                            return item;
-                        })
-                    }
-                }
-                return section;
-            });
-        case 'MAKE_IT_FAIL':
-            return state.map(section => {
-                if (section.section === action.section) {
-                    return {
-                        ...section,
-                        items: section.items.map(item => {
-                            if (item.id === action.id) {
-                                return {
-                                    ...item,
-                                    value: 'failed'
-                                };
-                            }
-                            return item;
-                        })
-                    }
-                }
-                return section;
-            });
-        case 'ADD_TODO':
-            return [
-                ...state,
-                {
-                    id: action.id,
-                    text: action.text,
-                    completed: false
-                }
-            ];
-        case 'TOGGLE_TODO':
-            return state.map(todo => {
-                if (todo.id === action.id) {
-                    return {
-                        id: todo.id,
-                        text: todo.text,
-                        completed: !todo.completed
-                    }
-                }
-                return todo;
-            });
-        default:
-            return state;
-    }
-}
+import checklistItem from './reducers/checklistItem';
 
 // Run tests
-import testTodo from './index.test';
-testTodo(todo);
+import checklist from './reducers/checklist';
+import testChecklist from './reducers/checklist.spec';
+testChecklist(checklist);
 
-import checklistItem from './reducers/checklistItem';
+import checklistItems from './reducers/checklistItems';
+import testChecklistItems from './reducers/checklistItems.spec';
+testChecklistItems(checklistItems);
+
 import testChecklistItem from './reducers/checklistItem.spec';
 testChecklistItem(checklistItem);
 
@@ -80,7 +21,7 @@ const App = ({
 }) => (
     <button onClick={() =>
             store.dispatch({
-                type: 'ADD_TODO',
+                type: 'ADD_SECTION',
                 id: 1,
                 text: 'werqwer'
             })
@@ -89,7 +30,7 @@ const App = ({
 );
 
 const { createStore } = Redux;
-const store = createStore(todo);
+const store = createStore(checklist);
 
 const render = () => {
     ReactDOM.render(
