@@ -1,7 +1,6 @@
-let React = require('react');
-let ReactDOM = require('react-dom');
-let Redux = require('redux');
-import checklistItem from './reducers/checklistItem';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { createStore } from 'redux'
 
 // Run tests
 import checklist from './reducers/checklist';
@@ -12,30 +11,19 @@ import checklistItems from './reducers/checklistItems';
 import testChecklistItems from './reducers/checklistItems.spec';
 testChecklistItems(checklistItems);
 
+import checklistItem from './reducers/checklistItem';
 import testChecklistItem from './reducers/checklistItem.spec';
 testChecklistItem(checklistItem);
 
-// Component: App
-const App = ({
-    value
-}) => (
-    <button onClick={() =>
-            store.dispatch({
-                type: 'ADD_SECTION',
-                id: 1,
-                text: 'werqwer'
-            })
-        }
-    >ADD_TODO</button>
-);
+import Checklist from './components/Checklist';
 
-const { createStore } = Redux;
 const store = createStore(checklist);
 
 const render = () => {
     ReactDOM.render(
-        <App
-            value={store.getState()}
+        <Checklist
+            store={store}
+            items={store.getState()}
         />,
         document.getElementById('root')
     );
