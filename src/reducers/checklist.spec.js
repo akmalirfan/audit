@@ -133,8 +133,17 @@ export default (todo) => {
         type: 'ADD_SECTION',
         section: 'Syarat-syarat Pensijilan Halal Malaysia'
     };
-    stateBefore = [];
+    stateBefore = [
+        {
+            "section": "woi",
+            "items": []
+        }
+    ];
     stateAfter = [
+        {
+            "section": "woi",
+            "items": []
+        },
         {
             "section": "Syarat-syarat Pensijilan Halal Malaysia",
             "items": []

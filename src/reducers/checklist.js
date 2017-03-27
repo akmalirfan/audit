@@ -12,6 +12,7 @@ export default (state = [], action) => {
             });
         case 'ADD_SECTION':
             return [
+                ...state,
                 {
                     section: action.section,
                     items: []
