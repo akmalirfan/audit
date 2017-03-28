@@ -1,30 +1,36 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import ChecklistItem from './ChecklistItem'
 
-let input;
-export default ({ items, store }) => (
-    <div>
-        <form
-            onSubmit={(e) => {
-                e.preventDefault();
-                store.dispatch({
-                    type: 'ADD_SECTION',
-                    section: input.value
-                });
-                input.value = '';
-            }}>
-            <input
-            ref={node => {
-                input = node;
-            }}/>
-        </form>
-        <ul>
-            {items.map((item, i) =>
-                <ChecklistItem
-                    key={i}
-                    {...item}
-                />
-            )}
-        </ul>
-    </div>
-)
+let Checklist = ({ items, onChecklistSubmit, onSectionSubmit }) => {
+    let input
+
+    return (
+        <div>
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    onChecklistSubmit(input.value)
+                    input.value = ''
+                }}>
+                <input
+                ref={node => {
+                    input = node;
+                }}/>
+            </form>
+            <ul>
+                {items.map((item, i) =>
+                    <ChecklistItem
+                        key={i}
+                        items={items}
+                        {...item}
+                        onSectionSubmit={onSectionSubmit}
+                    />
+                )}
+            </ul>
+        </div>
+    )
+}
+Checklist = connect()(Checklist)
+
+export default Checklist

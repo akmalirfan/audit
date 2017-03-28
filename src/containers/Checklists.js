@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
-import checklistItems from './checklistItems';
+import { addSection, addItem } from '../actions'
+import Checklist from '../components/Checklist';
+import checklistItems from '../reducers/checklistItems';
 
-export default (state = [], action) => {
+const getChecklists = (state = [], action) => {
     switch (action.type) {
         case 'MAKE_IT_PASS':
         case 'MAKE_IT_FAIL':
@@ -33,3 +35,19 @@ export default (state = [], action) => {
             return state;
     }
 }
+
+const mapStateToProps = (state) => ({
+  items: state
+})
+
+const mapDispatchToProps = {
+  onChecklistSubmit: addSection,
+  onSectionSubmit: addItem
+}
+
+const Checklists = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Checklist)
+
+export default Checklists

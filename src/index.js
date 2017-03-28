@@ -1,33 +1,32 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
 import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import App from './components/App'
 
 // Run tests
-import checklist from './reducers/checklist';
-import testChecklist from './reducers/checklist.spec';
+import checklist from './reducers/checklist'
+import testChecklist from './reducers/checklist.spec'
 testChecklist(checklist);
 
-import checklistItems from './reducers/checklistItems';
-import testChecklistItems from './reducers/checklistItems.spec';
+import checklistItems from './reducers/checklistItems'
+import testChecklistItems from './reducers/checklistItems.spec'
 testChecklistItems(checklistItems);
 
-import checklistItem from './reducers/checklistItem';
-import testChecklistItem from './reducers/checklistItem.spec';
+import checklistItem from './reducers/checklistItem'
+import testChecklistItem from './reducers/checklistItem.spec'
 testChecklistItem(checklistItem);
 
-import Checklist from './components/Checklist';
+import Checklist from './components/Checklist'
 
-const store = createStore(checklist);
+const store = createStore(checklist)
 
-const render = () => {
-    ReactDOM.render(
-        <Checklist
-            store={store}
-            items={store.getState()}
-        />,
-        document.getElementById('root')
-    );
-};
+render(
+    <Provider store={store}>
+        <App/>
+    </Provider>,
+    document.getElementById('root')
+)
 
-store.subscribe(render);
-render();
+// store.subscribe(render);
+// render();
