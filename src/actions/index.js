@@ -1,15 +1,16 @@
+let id = 0;
 export const addSection = (section) => ({
     type: 'ADD_SECTION',
     section
 })
 
-export const addItem = (item) => ({
+export const addItem = (text, section, severity) => ({
     type: 'ADD_CHECKLISTITEM',
-    item,
-    id:1,
-    text_ms: 'adsf',
+    section,
+    id:id++,
+    text_ms: text,
     info: [],
-    severity: 'sadf'
+    severity
 })
 
 export const setVisibilityFilter = (filter) => ({

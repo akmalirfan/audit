@@ -1,7 +1,63 @@
-import { connect } from 'react-redux'
-import checklistItems from './checklistItems';
+const checklistItem = (state = [], action) => {
+    switch (action.type) {
+        case 'MAKE_IT_PASS':
+            return {
+                ...state,
+                value: 'passed'
+            };
+        case 'MAKE_IT_FAIL':
+            return {
+                ...state,
+                value: 'failed'
+            };
+        default:
+            return state;
+    }
+};
 
-export default (state = [], action) => {
+const checklistItems = (state = [], action) => {
+    switch (action.type) {
+        case 'MAKE_IT_PASS':
+        case 'MAKE_IT_FAIL':
+            return state.map(item => {
+                if (item.id === action.id) {
+                    return checklistItem(item, action);
+                }
+                return item;
+            });
+        case 'ADD_CHECKLISTITEM':
+            if (state.section !== action.section) {
+                return state;
+            }
+
+            return {
+                section: action.section,
+                items: [
+                    ...state.items,
+                    {
+                        id: action.id,
+                        text_ms: action.text_ms,
+                        info: action.info,
+                        severity: action.severity
+                    }
+                ]
+            }
+        case 'REMOVE_CHECKLISTITEM':
+            let i = 0;
+            for (let item of state) {
+                if (item.id === action.id)
+                    return [
+                        ...state.slice(0, i),
+                        ...state.slice(i + 1)
+                    ];
+                i++;
+            }
+        default:
+            return state;
+    }
+};
+
+const checklist = (state = [], action) => {
     switch (action.type) {
         case 'MAKE_IT_PASS':
         case 'MAKE_IT_FAIL':
@@ -19,6 +75,14 @@ export default (state = [], action) => {
                     items: []
                 }
             ];
+        case 'ADD_CHECKLISTITEM':
+            return state.map(s => {
+                if (s.section !== action.section) {
+                    return s;
+                }
+                
+                return checklistItems(s, action)
+            })
         case 'REMOVE_SECTION':
             let i = 0;
             for (let section of state) {
@@ -33,3 +97,5 @@ export default (state = [], action) => {
             return state;
     }
 }
+
+export default checklist

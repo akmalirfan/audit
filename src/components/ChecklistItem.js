@@ -1,3 +1,4 @@
+import { addItem } from '../actions'
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -6,7 +7,7 @@ let ChecklistItem = ({ section, items, onSectionSubmit }) => {
 
     return (
         <li>
-            {section}
+            {items}
             <form
                 onSubmit={(e) => {
                     e.preventDefault()
@@ -28,6 +29,5 @@ let ChecklistItem = ({ section, items, onSectionSubmit }) => {
         </li>
     )
 }
-ChecklistItem = connect()(ChecklistItem)
 
 export default ChecklistItem

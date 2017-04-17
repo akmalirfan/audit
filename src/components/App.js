@@ -1,6 +1,10 @@
 import React from 'react'
 import Checklists from '../containers/Checklists'
+import AddSection from '../containers/AddSection'
 
 export default () => (
-    <Checklists/>
+    <div>
+        <AddSection/>
+        <Checklists/>
+    </div>
 )
