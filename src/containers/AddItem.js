@@ -4,7 +4,16 @@ import { addItem } from '../actions'
 
 let AddItem = ({ section, dispatch }) => {
     let input
-    let inp2
+    let rad1
+    let rad2
+    let rad3
+    let checkedrad
+    let severity
+
+    const setSeverity = (sev, rad) => {
+        severity = sev
+        checkedrad = rad
+    }
 
     return (
         <form
@@ -14,14 +23,36 @@ let AddItem = ({ section, dispatch }) => {
                     console.log('asdasd')
                     return
                 }
-                dispatch(addItem(input.value.trim(), section, inp2.value.trim()))
+                dispatch(addItem(input.value.trim(), section, severity))
                 input.value = ''
-                inp2.value = ''
+                checkedrad.checked = false
             }}
         >
             <input ref={node => input = node} placeholder="text" />
             
-            <input ref={node => inp2 = node} placeholder="severity" />
+            <label>
+                <input ref={node => rad1 = node} type="radio" name="severity" onClick={() => {
+                    severity = 'minor'
+                    checkedrad = rad1
+                }} />
+                minor
+            </label>
+
+            <label>
+                <input ref={node => rad2 = node} type="radio" name="severity" onClick={() => {
+                    severity = 'major'
+                    checkedrad = rad2
+                }} />
+                major
+            </label>
+
+            <label>
+                <input ref={node => rad3 = node} type="radio" name="severity" onClick={() => {
+                    severity = 'serious'
+                    checkedrad = rad3
+                }} />
+                serious
+            </label>
             
             <button type="submit">
                 Add Item
