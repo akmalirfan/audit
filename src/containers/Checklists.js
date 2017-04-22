@@ -1,19 +1,13 @@
 import { connect } from 'react-redux'
 import { addSection, addItem } from '../actions'
-import Section from '../components/Section';
+import SectionList from '../components/SectionList';
 
 const mapStateToProps = (state) => ({
-    items: state
+    sections: state
 })
 
-const mapDispatchToProps = {
-  onChecklistSubmit: addSection,
-  onSectionSubmit: addItem
-}
-
 const Checklists = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Section)
+  mapStateToProps
+)(SectionList)
 
 export default Checklists

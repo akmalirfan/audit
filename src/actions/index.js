@@ -13,6 +13,13 @@ export const addItem = (text, section, severity) => ({
     severity
 })
 
+export const addInfo = (text, section, itemid) => ({
+    type: 'ADD_INFO',
+    section,
+    id:itemid,
+    text
+})
+
 export const setVisibilityFilter = (filter) => ({
     type: 'SET_VISIBILITY_FILTER',
     filter

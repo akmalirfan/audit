@@ -1,33 +1,24 @@
 import { addItem } from '../actions'
 import React from 'react'
 import { connect } from 'react-redux'
+import AddInfo from '../containers/AddInfo'
 
-let ChecklistItem = ({ section, items, onSectionSubmit }) => {
-    let input
-
-    return (
-        <li>
-            {items}
-            <form
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    onSectionSubmit(input.value)
-                    input.value = ''
-                }}>
-                <input
-                ref={node => {
-                    input = node
-                }}/>
-            </form>
-            <ul>
-            {items.map((item, i) =>
-                <li
-                    key={i}
-                >{item}</li>
-            )}
-            </ul>
-        </li>
-    )
-}
+let ChecklistItem = ({ sectionname, item }) => (
+    <div>
+        {item.text_ms}
+        <span className="severity">{item.severity}</span>
+        <AddInfo
+            sectionname={sectionname}
+            itemid={item.id}
+        />
+        <ol>
+            {item.info.map((inf, i) => {
+                return (
+                    <li key={i}>{inf.text}</li>
+                )
+            })}
+        </ol>
+    </div>
+)
 
 export default ChecklistItem

@@ -1,39 +1,67 @@
-const checklistItem = (state = [], action) => {
+const checklistItem = (item = [], action) => {
     switch (action.type) {
         case 'MAKE_IT_PASS':
             return {
-                ...state,
+                ...item,
                 value: 'passed'
             };
         case 'MAKE_IT_FAIL':
             return {
-                ...state,
+                ...item,
                 value: 'failed'
             };
+        case 'ADD_INFO':
+            return {
+                ...item,
+                info: [
+                    ...item.info,
+                    {
+                        text: action.text
+                    }
+                ]
+            }
         default:
-            return state;
+            return item
     }
 };
 
-const checklistItems = (state = [], action) => {
+const section = (section = {}, action) => {
     switch (action.type) {
         case 'MAKE_IT_PASS':
         case 'MAKE_IT_FAIL':
-            return state.map(item => {
+            return section.items.map(item => {
                 if (item.id === action.id) {
                     return checklistItem(item, action);
                 }
-                return item;
+                return item
             });
+        case 'ADD_INFO':
+            console.log(action)
+            if (section.section !== action.section) {
+                return section
+            }
+
+            let woi = {
+                section: action.section,
+                items: section.items.map(item => {
+                    if (item.id !== action.id) {
+                        return item
+                    }
+
+                    return checklistItem(item, action)
+                })
+            }
+            console.log(woi)
+            return woi;
         case 'ADD_CHECKLISTITEM':
-            if (state.section !== action.section) {
-                return state;
+            if (section.section !== action.section) {
+                return section
             }
 
             return {
                 section: action.section,
                 items: [
-                    ...state.items,
+                    ...section.items,
                     {
                         id: action.id,
                         text_ms: action.text_ms,
@@ -44,16 +72,16 @@ const checklistItems = (state = [], action) => {
             }
         case 'REMOVE_CHECKLISTITEM':
             let i = 0;
-            for (let item of state) {
+            for (let item of section.items) {
                 if (item.id === action.id)
                     return [
-                        ...state.slice(0, i),
-                        ...state.slice(i + 1)
-                    ];
-                i++;
+                        ...section.items.slice(0, i),
+                        ...section.items.slice(i + 1)
+                    ]
+                i++
             }
         default:
-            return state;
+            return section
     }
 };
 
@@ -61,11 +89,12 @@ const checklist = (state = [], action) => {
     switch (action.type) {
         case 'MAKE_IT_PASS':
         case 'MAKE_IT_FAIL':
-            return state.map(section => {
-                return (section.section === action.section) ? {
-                    ...section,
-                    items: checklistItems(section.items, action)
-                } : section;
+            // Macam tak kena, sepatutnya pass the whole section
+            return state.map(sec => {
+                return (sec.section === action.section) ? {
+                    ...sec,
+                    items: section(sec, action)
+                } : sec
             });
         case 'ADD_SECTION':
             return [
@@ -76,25 +105,26 @@ const checklist = (state = [], action) => {
                 }
             ];
         case 'ADD_CHECKLISTITEM':
-            return state.map(s => {
-                if (s.section !== action.section) {
-                    return s;
+        case 'ADD_INFO':
+            return state.map(sec => {
+                if (sec.section !== action.section) {
+                    return sec
                 }
                 
-                return checklistItems(s, action)
+                return section(sec, action)
             })
         case 'REMOVE_SECTION':
-            let i = 0;
+            let i = 0
             for (let section of state) {
                 if (section.section === action.section)
                     return [
                         ...state.slice(0, i),
                         ...state.slice(i + 1)
-                    ];
-                i++;
+                    ]
+                i++
             }
         default:
-            return state;
+            return state
     }
 }
 
