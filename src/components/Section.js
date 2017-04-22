@@ -6,12 +6,12 @@ import ChecklistItem from './ChecklistItem'
 let Section = ({ section, dispatch }) => (
     <div className="section">
         <h3>{section.section}</h3>
-        <AddItem section={section.section} />
         {section.items.map((item, i) => {
             return (
                 <ChecklistItem key={i} item={item} sectionname={section.section}/>
             )
         })}
+        <AddItem section={section.section} />
     </div>
 )
 
