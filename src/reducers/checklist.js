@@ -34,7 +34,6 @@ const section = (section = {}, action) => {
                     checklistItem(item, action) : item
             })
         case 'ADD_INFO':
-            console.log(action)
             return (section.section === action.section) ? {
                 section: action.section,
                 items: section.items.map(item => {

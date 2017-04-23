@@ -20,7 +20,6 @@ let AddItem = ({ section, dispatch }) => {
             onSubmit={e => {
                 e.preventDefault()
                 if (!input.value.trim()) {
-                    console.log('asdasd')
                     return
                 }
                 dispatch(addItem(input.value.trim(), section, severity))
