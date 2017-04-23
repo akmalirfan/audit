@@ -95,7 +95,7 @@ const checklist = (state = [], action) => {
                     ...sec,
                     items: section(sec, action)
                 } : sec
-            });
+            })
         case 'ADD_SECTION':
             return [
                 ...state,
