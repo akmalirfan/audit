@@ -4,12 +4,12 @@ const checklistItem = (item = [], action) => {
             return {
                 ...item,
                 value: 'passed'
-            };
+            }
         case 'MAKE_IT_FAIL':
             return {
                 ...item,
                 value: 'failed'
-            };
+            }
         case 'ADD_INFO':
             return {
                 ...item,
@@ -23,42 +23,27 @@ const checklistItem = (item = [], action) => {
         default:
             return item
     }
-};
+}
 
 const section = (section = {}, action) => {
     switch (action.type) {
         case 'MAKE_IT_PASS':
         case 'MAKE_IT_FAIL':
             return section.items.map(item => {
-                if (item.id === action.id) {
-                    return checklistItem(item, action);
-                }
-                return item
-            });
+                return (item.id === action.id) ?
+                    checklistItem(item, action) : item
+            })
         case 'ADD_INFO':
             console.log(action)
-            if (section.section !== action.section) {
-                return section
-            }
-
-            let woi = {
+            return (section.section === action.section) ? {
                 section: action.section,
                 items: section.items.map(item => {
-                    if (item.id !== action.id) {
-                        return item
-                    }
-
-                    return checklistItem(item, action)
+                    return (item.id === action.id) ?
+                        checklistItem(item, action) : item
                 })
-            }
-            console.log(woi)
-            return woi;
+            } : section
         case 'ADD_CHECKLISTITEM':
-            if (section.section !== action.section) {
-                return section
-            }
-
-            return {
+            return (section.section === action.section) ? {
                 section: action.section,
                 items: [
                     ...section.items,
@@ -69,9 +54,9 @@ const section = (section = {}, action) => {
                         severity: action.severity
                     }
                 ]
-            }
+            } : section
         case 'REMOVE_CHECKLISTITEM':
-            let i = 0;
+            let i = 0
             for (let item of section.items) {
                 if (item.id === action.id)
                     return [
@@ -83,18 +68,15 @@ const section = (section = {}, action) => {
         default:
             return section
     }
-};
+}
 
 const checklist = (state = [], action) => {
     switch (action.type) {
         case 'MAKE_IT_PASS':
         case 'MAKE_IT_FAIL':
-            // Macam tak kena, sepatutnya pass the whole section
             return state.map(sec => {
-                return (sec.section === action.section) ? {
-                    ...sec,
-                    items: section(sec, action)
-                } : sec
+                return (sec.section === action.section) ?
+                    section(sec, action) : section
             })
         case 'ADD_SECTION':
             return [
@@ -103,15 +85,12 @@ const checklist = (state = [], action) => {
                     section: action.section,
                     items: []
                 }
-            ];
+            ]
         case 'ADD_CHECKLISTITEM':
         case 'ADD_INFO':
             return state.map(sec => {
-                if (sec.section !== action.section) {
-                    return sec
-                }
-                
-                return section(sec, action)
+                return (sec.section === action.section) ?
+                    section(sec, action) : sec
             })
         case 'REMOVE_SECTION':
             let i = 0
