@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { createStore } from 'redux'
+import { applyMiddleware, createStore } from 'redux'
+import logger from 'redux-logger'
 import { Provider } from 'react-redux'
 import App from './components/App'
 // import reducer from './reducers'
@@ -22,7 +23,10 @@ xhr.onreadystatechange = (xhr) => {
     }
 }
 xhr.send()*/
-const store = createStore(checklist)
+const store = createStore(
+    checklist,
+    applyMiddleware(logger)
+)
 
 render(
     <Provider store={store}>
