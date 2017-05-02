@@ -1,4 +1,4 @@
-const checklistItem = (item = [], action) => {
+const checklistItem = (item = {}, action) => {
     switch (action.type) {
         case 'MAKE_IT_PASS':
             return {
@@ -29,10 +29,6 @@ const section = (section = {}, action) => {
     switch (action.type) {
         case 'MAKE_IT_PASS':
         case 'MAKE_IT_FAIL':
-            return section.items.map(item => {
-                return (item.id === action.id) ?
-                    checklistItem(item, action) : item
-            })
         case 'ADD_INFO':
             return (section.section === action.section) ? {
                 section: action.section,
@@ -69,13 +65,16 @@ const section = (section = {}, action) => {
     }
 }
 
+let xhr = new XMLHttpRequest()
 const checklist = (state = [], action) => {
     switch (action.type) {
         case 'MAKE_IT_PASS':
         case 'MAKE_IT_FAIL':
+        case 'ADD_CHECKLISTITEM':
+        case 'ADD_INFO':
             return state.map(sec => {
                 return (sec.section === action.section) ?
-                    section(sec, action) : section
+                    section(sec, action) : sec
             })
         case 'ADD_SECTION':
             return [
@@ -85,12 +84,6 @@ const checklist = (state = [], action) => {
                     items: []
                 }
             ]
-        case 'ADD_CHECKLISTITEM':
-        case 'ADD_INFO':
-            return state.map(sec => {
-                return (sec.section === action.section) ?
-                    section(sec, action) : sec
-            })
         case 'REMOVE_SECTION':
             let i = 0
             for (let section of state) {
@@ -101,6 +94,28 @@ const checklist = (state = [], action) => {
                     ]
                 i++
             }
+        case 'SAVE':
+            xhr.open('POST', 'http://localhost/save.php')
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText)
+                }
+            }
+            xhr.send(`auditid=${action.auditid}&jdoc=${JSON.stringify(action.jdoc)}`)
+
+            return state
+        case 'SAVE_CHECKLIST':
+            xhr.open('POST', 'http://localhost/save_checklist.php')
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText)
+                }
+            }
+            xhr.send(`checklistid=${action.checklistid}&jdoc=${JSON.stringify(action.jdoc)}`)
+
+            return state
         default:
             return state
     }
