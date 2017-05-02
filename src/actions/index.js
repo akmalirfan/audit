@@ -13,19 +13,21 @@ export const addItem = (text, section, severity) => ({
     severity
 })
 
-export const addInfo = (text, section, itemid) => ({
+export const addInfo = (text, section, id) => ({
     type: 'ADD_INFO',
     section,
-    id:itemid,
+    id,
     text
 })
 
-export const setVisibilityFilter = (filter) => ({
-    type: 'SET_VISIBILITY_FILTER',
-    filter
+export const makeItPass = (section, id) => ({
+    type: 'MAKE_IT_PASS',
+    section,
+    id
 })
 
-export const toggleTodo = (id) => ({
-    type: 'TOGGLE_TODO',
+export const makeItFail = (section, id) => ({
+    type: 'MAKE_IT_FAIL',
+    section,
     id
 })
