@@ -7,21 +7,23 @@ let AddSection = ({ dispatch }) => {
 
   return (
     <div>
-      <form onSubmit={e => {
-        e.preventDefault()
-        if (!input.value.trim()) {
-          return
-        }
-        dispatch(addSection(input.value.trim()))
-        input.value = ''
-      }}>
+      <div>
         <input ref={node => {
           input = node
         }} />
-        <button type="submit">
+        <button
+          onClick={e => {
+            e.preventDefault()
+            if (!input.value.trim()) {
+              return
+            }
+            dispatch(addSection(input.value.trim()))
+            input.value = ''
+          }}
+        >
           Add Section
         </button>
-      </form>
+      </div>
     </div>
   )
 }

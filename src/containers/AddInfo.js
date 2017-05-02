@@ -6,22 +6,22 @@ let AddInfo = ({ sectionname, itemid, dispatch }) => {
     let input
 
     return (
-        <form
-            onSubmit={e => {
-                e.preventDefault()
-                if (!input.value.trim()) {
-                    return
-                }
-                dispatch(addInfo(input.value.trim(), sectionname, itemid))
-                input.value = ''
-            }}
-        >
+        <div>
             <input ref={node => input = node} placeholder="text" />
             
-            <button type="submit">
+            <button
+                onClick={e => {
+                    e.preventDefault()
+                    if (!input.value.trim()) {
+                        return
+                    }
+                    dispatch(addInfo(input.value.trim(), sectionname, itemid))
+                    input.value = ''
+                }}
+            >
                 Add Info
             </button>
-        </form>
+        </div>
     )
 }
 

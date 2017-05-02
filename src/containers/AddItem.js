@@ -16,17 +16,7 @@ let AddItem = ({ section, dispatch }) => {
     }
 
     return (
-        <form
-            onSubmit={e => {
-                e.preventDefault()
-                if (!input.value.trim()) {
-                    return
-                }
-                dispatch(addItem(input.value.trim(), section, severity))
-                input.value = ''
-                checkedrad.checked = false
-            }}
-        >
+        <div>
             <input ref={node => input = node} placeholder="text" />
             
             <label>
@@ -53,10 +43,20 @@ let AddItem = ({ section, dispatch }) => {
                 serious
             </label>
             
-            <button type="submit">
+            <button
+                onClick={e => {
+                    e.preventDefault()
+                    if (!input.value.trim()) {
+                        return
+                    }
+                    dispatch(addItem(input.value.trim(), section, severity))
+                    input.value = ''
+                    checkedrad.checked = false
+                }}
+            >
                 Add Item
             </button>
-        </form>
+        </div>
     )
 }
 
