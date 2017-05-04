@@ -12,11 +12,9 @@ let ChecklistItem = ({ sectionname, item }) => (
             itemid={item.id}
         />
         <ol>
-            {item.info.map((inf, i) => {
-                return (
-                    <li key={i}>{inf.text}</li>
-                )
-            })}
+            {item.info.map((inf, i) => 
+                <li key={i}>{inf.text}</li>
+            )}
         </ol>
     </div>
 )
