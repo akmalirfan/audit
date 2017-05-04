@@ -1,3 +1,8 @@
 export default (state = -1, action) => {
-    return state
+    switch (action.type) {
+        case 'RECEIVE_CHECKLIST':
+            return action.checklistid
+        default:
+            return state
+    }
 }

@@ -94,8 +94,10 @@ const checklist = (state = [], action) => {
                     ]
                 i++
             }
+        case 'RECEIVE_CHECKLIST':
+            return action.checklist
         case 'SAVE':
-            xhr.open('POST', 'http://localhost/save.php')
+            xhr.open('POST', 'http://localhost/audit_all/save.php')
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
@@ -106,14 +108,15 @@ const checklist = (state = [], action) => {
 
             return state
         case 'SAVE_CHECKLIST':
-            xhr.open('POST', 'http://localhost/save_checklist.php')
+            xhr.open('POST', `http://localhost/audit_all/save_checklist.php`)
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     console.log(xhr.responseText)
                 }
             }
-            xhr.send(`checklistid=${action.checklistid}&jdoc=${JSON.stringify(action.jdoc)}`)
+            let editingstring = (action.editing) ? '&editing':''
+            xhr.send(`checklistid=${action.checklistid}&jdoc=${JSON.stringify(action.jdoc)}${editingstring}`)
 
             return state
         default:
