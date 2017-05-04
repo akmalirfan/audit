@@ -31,3 +31,33 @@ export const makeItFail = (section, id) => ({
     section,
     id
 })
+
+export const requestChecklist = () => ({
+    type: 'REQUEST_CHECKLIST'
+})
+
+export const receiveChecklist = (checklistid, json) => ({
+    type: 'RECEIVE_CHECKLIST',
+    checklistid,
+    checklist: json
+})
+
+const fetchChecklist = checklistid => dispatch => {
+    dispatch(requestChecklist())
+    return fetch(`http://localhost/audit_all/load.php?editing&checklistid=${checklistid}`)
+        .then(response => response.json())
+        .then(json => dispatch(receiveChecklist(checklistid, json)))
+}
+
+const shouldFetchChecklist = (state, checklistid) => {
+    if (!state.checklist.length && state.editing && state.checklistid) {
+        return true
+    }
+    return !state.isFetching
+}
+
+export const fetchChecklistIfNeeded = checklistid => (dispatch, getState) => {
+    if (shouldFetchChecklist(getState(), checklistid)) {
+        return dispatch(fetchChecklist(checklistid))
+    }
+}
