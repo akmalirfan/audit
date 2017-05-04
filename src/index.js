@@ -3,33 +3,38 @@ import { render } from 'react-dom'
 import { applyMiddleware, createStore } from 'redux'
 import logger from 'redux-logger'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 import App from './components/App'
 import reducer from './reducers'
 require('./css/style.css')
 
-/*let xhr = new XMLHttpRequest();
-xhr.open('GET', 'http://gmm-student.fc.utm.my/~aibnm/data.php')
-xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        const store = createStore(checklist, JSON.parse(xhr.responseText))
-
-        render(
-            <Provider store={store}>
-                <App/>
-            </Provider>,
-            document.getElementById('root')
-        )
-    }
+const middleware = [ thunk ]
+if (process.env.NODE_ENV !== 'production') {
+    middleware.push(logger)
 }
-xhr.send()*/
-let checklistid = window.location.search.substr(1).split('=')[1]
+
+const searchToObject = (search) => {
+    return search.substring(1).split('&').reduce((result, value) => {
+        let parts = value.split('=')
+        if (parts[0]) {
+            result[decodeURIComponent(parts[0])] = (parts[1]) ? decodeURIComponent(parts[1]) : true
+        }
+        return result
+    }, {})
+}
+
+let searchObj = searchToObject(window.location.search)
+let checklistid = searchObj.checklistid
+let editing = searchObj.editing
 const store = createStore(
     reducer,
     {
+        editing,
         checklistid,
+        isFetching: false,
         checklist: []
     },
-    applyMiddleware(logger)
+    applyMiddleware(...middleware)
 )
 
 render(
