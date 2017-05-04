@@ -53,7 +53,7 @@ const shouldFetchChecklist = (state, checklistid) => {
     if (!state.checklist.length && state.editing && state.checklistid) {
         return true
     }
-    return !state.isFetching
+    return !state.isFetching && state.editing
 }
 
 export const fetchChecklistIfNeeded = checklistid => (dispatch, getState) => {
@@ -61,3 +61,10 @@ export const fetchChecklistIfNeeded = checklistid => (dispatch, getState) => {
         return dispatch(fetchChecklist(checklistid))
     }
 }
+
+export const saveChecklist = () => ({
+    type: 'SAVE_CHECKLIST',
+    checklistid,
+    editing,
+    jdoc: checklist
+})

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import AddSection from '../containers/AddSection'
 import Checklists from '../containers/Checklists'
-import { fetchChecklistIfNeeded } from '../actions'
+import { fetchChecklistIfNeeded, saveChecklist } from '../actions'
 
 class App extends Component {
     componentDidMount() {
@@ -20,12 +20,7 @@ class App extends Component {
                     type="submit"
                     onClick={(e) => {
                         e.preventDefault()
-                        dispatch({
-                            type:'SAVE_CHECKLIST',
-                            checklistid,
-                            editing,
-                            jdoc: checklist
-                        })
+                        dispatch(saveChecklist(checklistid, editing, checklist))
                     }}
                 />
             </form>
