@@ -46,12 +46,13 @@ let AddItem = ({ section, dispatch }) => {
             <button
                 onClick={e => {
                     e.preventDefault()
-                    if (!input.value.trim()) {
+                    if (!input.value.trim() || !checkedrad) {
                         return
                     }
                     dispatch(addItem(input.value.trim(), section, severity))
                     input.value = ''
                     checkedrad.checked = false
+                    checkedrad = undefined
                 }}
             >
                 Add Item
