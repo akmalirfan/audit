@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import AddSection from '../containers/AddSection'
 import Checklists from '../containers/Checklists'
 import { fetchChecklistIfNeeded, saveChecklist } from '../actions'
-import Image from '../img/check_radio_sheet.svg'
+// import Image from '../img/check_radio_sheet.svg'
 
 class App extends Component {
     componentDidMount() {
@@ -20,6 +20,7 @@ class App extends Component {
                 <Checklists/>
                 <input
                     type="submit"
+                    className="btn"
                     onClick={(e) => {
                         e.preventDefault()
                         dispatch(saveChecklist(checklistid, editing, checklist))
