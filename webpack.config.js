@@ -16,7 +16,25 @@ module.exports = {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.css$/, loader: "style-loader!css-loader" }
+      { test: /\.css$/, loader: "style-loader!css-loader" },
+      { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'babel-loader'
+          },
+          {
+            loader: 'react-svg-loader',
+            query: {
+              svgo: {
+                plugins: [{removeTitle: false}],
+                floatPrecision: 2
+              }
+            }
+          }
+        ]
+      }
     ]
   },
   plugins: [HtmlWebpackPluginConfig]
