@@ -116,7 +116,7 @@ const checklist = (state = [], action) => {
                 }
             }
             let editingstring = (action.editing) ? '&editing':''
-            xhr.send(`checklistid=${action.checklistid}&jdoc=${JSON.stringify(action.jdoc)}${editingstring}`)
+            xhr.send(`checklistid=${action.checklistid}&scheme=${action.scheme}&jdoc=${JSON.stringify(action.jdoc)}${editingstring}`)
 
             return state
         default:

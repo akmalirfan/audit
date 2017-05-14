@@ -27,12 +27,14 @@ const searchToObject = (search) => {
 
 let searchObj = searchToObject(window.location.search)
 let checklistid = searchObj.checklistid
+let scheme = searchObj.scheme
 let editing = searchObj.editing
 const store = createStore(
     reducer,
     {
         editing,
         checklistid,
+        scheme,
         isFetching: false,
         checklist: []
     },
