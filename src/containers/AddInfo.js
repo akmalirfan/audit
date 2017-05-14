@@ -6,10 +6,15 @@ let AddInfo = ({ sectionname, itemid, dispatch }) => {
     let input
 
     return (
-        <div>
-            <input ref={node => input = node} placeholder="text" />
+        <div className="info row">
+            <input
+                className="col s7 offset-s1"
+                ref={node => input = node}
+                placeholder="Info"
+            />
             
             <button
+                className="btn col s3"
                 onClick={e => {
                     e.preventDefault()
                     if (!input.value.trim()) {

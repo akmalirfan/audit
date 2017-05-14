@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import AddInfo from '../containers/AddInfo'
 
 let ChecklistItem = ({ sectionname, item }) => (
-    <div>
+    <div className="citem">
         {item.text_ms}
-        <span className="severity">{item.severity}</span>
+        <span className="severity chip">{item.severity}</span>
         <AddInfo
             sectionname={sectionname}
             itemid={item.id}

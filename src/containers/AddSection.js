@@ -6,9 +6,10 @@ let AddSection = ({ dispatch }) => {
     let input
 
     return (
-        <div className="row">
+        <div className="addsection row">
             <input
-                className="input-field col s8"
+                className="input-field col s9"
+                placeholder="Section name"
                 ref={node => {
                 input = node
             }} />
@@ -17,7 +18,7 @@ let AddSection = ({ dispatch }) => {
                 onClick={e => {
                 e.preventDefault()
                 if (!input.value.trim()) {
-                return
+                    return
                 }
                 dispatch(addSection(input.value.trim()))
                 input.value = ''

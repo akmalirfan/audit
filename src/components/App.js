@@ -12,20 +12,24 @@ class App extends Component {
     }
 
     render() {
-        const { checklistid, editing, checklist, dispatch } = this.props
+        const { checklistid, scheme, editing, checklist, dispatch } = this.props
         return (
             <form>
                 {/*<Image width={38} height={38} viewBox="38 0 38 38" />*/}
-                <AddSection/>
                 <Checklists/>
-                <input
+                <AddSection/>
+                <button
+                    className="btn-large blue right"
                     type="submit"
-                    className="btn"
+                    name="action"
                     onClick={(e) => {
                         e.preventDefault()
-                        dispatch(saveChecklist(checklistid, editing, checklist))
+                        dispatch(saveChecklist(checklistid, scheme, editing, checklist))
                     }}
-                />
+                >
+                    Submit
+                    <i className="material-icons right">send</i>
+                </button>
             </form>
         )
     }

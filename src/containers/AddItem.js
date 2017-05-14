@@ -17,33 +17,37 @@ let AddItem = ({ section, dispatch }) => {
 
     return (
         <div>
-            <input ref={node => input = node} placeholder="text" />
+            <input
+                ref={node => input = node}
+                placeholder="text"
+            />
             
-            <label>
-                <input ref={node => rad1 = node} type="radio" name="severity" onClick={() => {
+            <p>
+                <input className="with-gap" id={section + 1} ref={node => rad1 = node} type="radio" name="severity" onClick={() => {
                     severity = 'minor'
                     checkedrad = rad1
                 }} />
-                minor
-            </label>
+                <label htmlFor={section + 1}>minor</label>
+            </p>
 
-            <label>
-                <input ref={node => rad2 = node} type="radio" name="severity" onClick={() => {
+            <p>
+                <input className="with-gap" id={section + 2} ref={node => rad2 = node} type="radio" name="severity" onClick={() => {
                     severity = 'major'
                     checkedrad = rad2
                 }} />
-                major
-            </label>
+                <label htmlFor={section + 2}>major</label>
+            </p>
 
-            <label>
-                <input ref={node => rad3 = node} type="radio" name="severity" onClick={() => {
+            <p>
+                <input className="with-gap" id={section + 3} ref={node => rad3 = node} type="radio" name="severity" onClick={() => {
                     severity = 'serious'
                     checkedrad = rad3
                 }} />
-                serious
-            </label>
+                <label htmlFor={section + 3}>serious</label>
+            </p>
             
             <button
+                className="btn"
                 onClick={e => {
                     e.preventDefault()
                     if (!input.value.trim() || !checkedrad) {
