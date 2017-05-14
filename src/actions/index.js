@@ -62,9 +62,10 @@ export const fetchChecklistIfNeeded = checklistid => (dispatch, getState) => {
     }
 }
 
-export const saveChecklist = () => ({
+export const saveChecklist = (checklistid, scheme, editing, checklist) => ({
     type: 'SAVE_CHECKLIST',
     checklistid,
+    scheme,
     editing,
     jdoc: checklist
 })
