@@ -19,16 +19,18 @@ class App extends Component {
                 <Checklists/>
                 <AddSection/>
                 <button
+                    id="savebtn"
                     className="btn-large blue right"
                     type="submit"
                     name="action"
                     onClick={(e) => {
                         e.preventDefault()
                         dispatch(saveChecklist(checklistid, scheme, editing, checklist))
+                        document.getElementById('savebtn').innerText = 'Saving...'
                     }}
                 >
-                    Submit
-                    <i className="material-icons right">send</i>
+                    SAVE
+                    {/*<i className="material-icons right">send</i>*/}
                 </button>
             </form>
         )
