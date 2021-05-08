@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import AddItem from '../containers/AddItem'
 import Section from './Section'
-import ChecklistItem from './ChecklistItem'
 
 let SectionList = ({ sections, dispatch }) => (
     <div className="sectionlist">
