@@ -62,10 +62,15 @@ export const fetchChecklistIfNeeded = checklistid => (dispatch, getState) => {
     }
 }
 
-export const saveChecklist = (checklistid, scheme, editing, checklist) => ({
-    type: 'SAVE_CHECKLIST',
-    checklistid,
-    scheme,
-    editing,
-    jdoc: checklist
-})
+export const saveChecklist = (checklistid, scheme, editing, checklist) => dispatch => {
+    dispatch({ type: 'SAVE_CHECKLIST' })
+    return fetch(`http://localhost/audit_all/save_checklist.php`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/x-www-form-urlencoded'
+        },
+        body: `checklistid=${checklistid}&scheme=${scheme}&jdoc=${JSON.stringify(checklist)}${editing ? '&editing':''}`
+    })
+    .then(response => response.json())
+    .then(json => dispatch({ type: 'SAVE_CHECKLIST' }))
+}

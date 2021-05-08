@@ -108,21 +108,6 @@ const checklist = (state = [], action) => {
 
             return state
         case 'SAVE_CHECKLIST':
-            xhr.open('POST', `http://localhost/audit_all/save_checklist.php`)
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        console.log(xhr.responseText)
-                        document.getElementById('savebtn').innerText = 'SAVE'
-                    } else {
-                        document.getElementById('savebtn').innerText = 'ERROR!'
-                    }
-                }
-            }
-            let editingstring = (action.editing) ? '&editing':''
-            xhr.send(`checklistid=${action.checklistid}&scheme=${action.scheme}&jdoc=${JSON.stringify(action.jdoc)}${editingstring}`)
-
             return state
         default:
             return state
