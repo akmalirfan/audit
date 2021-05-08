@@ -67,9 +67,15 @@ export const saveChecklist = (checklistid, scheme, editing, checklist) => dispat
     return fetch(`http://localhost/audit_all/save_checklist.php`, {
         method: 'POST',
         headers: {
-            'Content-type': 'application/x-www-form-urlencoded'
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         },
-        body: `checklistid=${checklistid}&scheme=${scheme}&jdoc=${JSON.stringify(checklist)}${editing ? '&editing':''}`
+        body: JSON.stringify({
+            checklistid,
+            scheme,
+            checklist,
+            editing
+        })
     })
     .then(response => response.json())
     .then(json => dispatch({ type: 'SAVE_CHECKLIST' }))
