@@ -6,8 +6,6 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import App from './components/App'
 import reducer from './reducers'
-import 'materialize-css'
-import 'materialize-css/dist/css/materialize.min.css'
 require('./css/style.css')
 
 const middleware = [ thunk ]
