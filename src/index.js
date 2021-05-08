@@ -6,9 +6,9 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import App from './components/App'
 import reducer from './reducers'
-require('./css/style.css')
 import 'materialize-css'
 import 'materialize-css/dist/css/materialize.min.css'
+require('./css/style.css')
 
 const middleware = [ thunk ]
 if (process.env.NODE_ENV !== 'production') {
